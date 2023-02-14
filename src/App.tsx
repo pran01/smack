@@ -2,10 +2,14 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
+
+import AuthFirebase from "./components/AuthFirebase.jsx";
+
 function App() {
+
   return (
     <div className="App">
-      <h1 className="text-red-500">hello world</h1>
+      <AuthFirebase/>
     </div>
   );
 }
