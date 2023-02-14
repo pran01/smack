@@ -40,11 +40,13 @@ const MagicLink = () => {
     <section>
       <input
         type="email"
-        className="border-2 border-black"
+        placeholder="name@work-email.com"
+        className="border-2 border-black pt-2.5 px-3 pb-3.5 
+          h-11 text-lg leading-4/3 rounded border-solid border border-[#D1D2D3] mb-5 w-full"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button onClick={(e) => sendEmail(e)} className="w-32 h-12 bg-blue-500">
+      <button onClick={(e) => sendEmail(e)} className="w-full mb-5 text-lg h-11 font-bold bg-[#1264a3] rounded ">
         Send Link
       </button>
     </section>
