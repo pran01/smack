@@ -1,12 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import SignIn from "./components/SignIn";
 
 function App() {
   return (
     <div className="App">
-      <h1 className="text-red-500">hello world</h1>
+      <SignIn />
     </div>
+    
   );
 }
 
