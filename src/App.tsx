@@ -1,11 +1,10 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import MagicLink from "./components/MagicLink";
 
 function App() {
   return (
     <div className="App">
-      <h1 className="text-red-500">hello world</h1>
+      <MagicLink />
     </div>
   );
 }
