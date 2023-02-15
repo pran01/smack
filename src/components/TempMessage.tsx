@@ -4,14 +4,12 @@ import MessageToolbar from "./MessageToolbar";
 const TempMessage = () => {
   const [toolbarVisible, setToolbarVisible] = useState(false);
   return (
-    <section
-      className="w-4/5"
+      <div className="relative w-full h-20 bg-bg-light hover:bg-fg-gray"
       onMouseOver={() => setToolbarVisible(true)}
-      onMouseLeave={() => setToolbarVisible(false)}>
-      <div className="relative w-full h-20 bg-bg-light hover:bg-fg-gray">
+      onMouseLeave={() => setToolbarVisible(false)}
+      >
         {toolbarVisible && <MessageToolbar />}
       </div>
-    </section>
   );
 };
 

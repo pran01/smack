@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { addDoc, collection, } from 'firebase/firestore';
 
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -7,6 +8,8 @@ import PropTypes from "prop-types";
 import { onAuthStateChanged} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase/firebase";
+
+import { db } from "../firebase/firebase";
 
 initializeApp(firebaseConfig);
 
@@ -20,8 +23,28 @@ const AuthFirebase: React.FunctionComponent<IAuthFirebase> = (props) => {
     setAuthing(true);
 
     signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
-        console.log(response.user);
+      .then(async (response) => {
+        // console.log(response.user);
+
+        const userData = {
+          name: response.user.displayName,
+          photoUrl: response.user.photoURL,
+          email: response.user.email,
+          status: true,
+          uid: response.user.uid
+        }
+
+        localStorage.setItem("current_user",JSON.stringify(userData));
+
+        const dbRef = collection(db, "users");
+        await addDoc(dbRef, userData)
+        .then(docRef => {
+            console.log("Document has been added successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
         setAuthing(false);
       })
       .catch((err) => {
