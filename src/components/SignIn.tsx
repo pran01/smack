@@ -1,4 +1,5 @@
 import React from 'react';
+import AuthFirebase from './AuthFirebase';
 import MagicLink from './MagicLink';
 
 const SignIn= () => {
@@ -26,8 +27,11 @@ const SignIn= () => {
                     <div className='text-center leading-7 text-lg mb-8 max-w-700'>
                         We suggest using the <span className='font-bold'>email address you use at work</span>
                     </div>
+                    <div>
+                        <AuthFirebase />
+                    </div>
                     <div className='content-rule my-6 flex items-center'>
-                        <hr className='border-t border-[#D1D2D3]'></hr>
+                        <hr className=''></hr>
                         <div className='py-0 px-5'>OR</div>
                         <hr className='grow m-0 border-0 border-t-1 border-gray-300 clear-both'></hr>
                     </div>

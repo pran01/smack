@@ -4,14 +4,12 @@ import SignIn from "./components/SignIn";
 import MagicLink from "./components/MagicLink";
 
 
-import AuthFirebase from "./components/AuthFirebase.jsx";
+import AuthFirebase from "./components/AuthFirebase";
 
 function App() {
 
   return (
     <div className="App">
-      <AuthFirebase/>
-      <MagicLink />
       <SignIn />
     </div>
   );
