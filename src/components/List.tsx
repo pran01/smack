@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/UserList.css";
+// import "../styles/UserList.css";
 
 const userData = [{
   "name": "Nikhil Tidke",
@@ -12,21 +12,21 @@ const userData = [{
   "password": "pass@123",
 }]
 
-const UserList:React.FunctionComponent = () => {
+const List:React.FunctionComponent = () => {
 
   return (
-    <div className='sidebar-component'>
-      <div className='list-header'>
+    <div className='w-56 flex flex-col'>
+      <div className='flex gap-2 items-center p-3'>
         <i className="fa-solid fa-arrow-down"></i>
-        <h1>Direct Messages</h1>
+        <h1 className='text-lg'>Direct Messages</h1>
       </div>
-      <div className='user-list'>
+      <div className='flex flex-col gap-2 p-3'>
         {
           userData.map((data) => {
             return(
-              <div className='user'>
-                  <div>
-                    <img src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg" alt="" />
+              <div className='flex items-center justify-between'>
+                  <div className='flex gap-2 items-center'>
+                    <img className='w-10' src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg" alt="" />
                     <p>{data.name}</p>
                   </div>
 
@@ -42,4 +42,4 @@ const UserList:React.FunctionComponent = () => {
   )
 }
 
-export default UserList
+export default List;
