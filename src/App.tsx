@@ -13,15 +13,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 function App() {
   const queryClient = new QueryClient();
   return (
-<<<<<<< HEAD
-    <div className="App w-screen h-screen flex justify-center items-center">
-      {/* <AuthFirebase/> */}
-      <List/>
-      <ChatPage/>
-      {/* <SignIn /> */}
-      {/* <TempMessage /> */}
-    </div>
-=======
     <QueryClientProvider client={queryClient}>
       <div className="App w-screen h-screen flex justify-center items-end">
         {/* <UserList/>
@@ -30,7 +21,6 @@ function App() {
         <TempMessage />
       </div>
     </QueryClientProvider>
->>>>>>> fa210a993035c0449b7e2cb4f34247f66450d347
   );
 }
 
