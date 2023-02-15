@@ -7,14 +7,16 @@ import UserList from "./components/UserList";
 import ChatPage from "./components/ChatPage";
 
 import AuthFirebase from "./components/AuthFirebase";
+import TextBox from "./components/TextBox";
 
 function App() {
 
   return (
     <div className="App">
       {/* <UserList/> */}
-      <ChatPage/>
+      {/* <ChatPage/> */}
       {/* <SignIn /> */}
+      <TextBox />
     </div>
   );
 }
