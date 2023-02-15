@@ -1,4 +1,6 @@
 import React from 'react';
+import AuthFirebase from './AuthFirebase';
+import MagicLink from './MagicLink';
 
 const SignIn= () => {
     return(
@@ -25,16 +27,24 @@ const SignIn= () => {
                     <div className='text-center leading-7 text-lg mb-8 max-w-700'>
                         We suggest using the <span className='font-bold'>email address you use at work</span>
                     </div>
-                    <div className='flex py-3 px-6'>
+                    <div>
+                        <AuthFirebase />
+                    </div>
+                    <div className='content-rule my-6 flex items-center'>
+                        <hr className=''></hr>
+                        <div className='py-0 px-5'>OR</div>
+                        <hr className='grow m-0 border-0 border-t-1 border-gray-300 clear-both'></hr>
+                    </div>
+                    <div>
+                        <MagicLink />
+                    </div>
+                    <div className='flex py-3 rounded px-6 bg-[#222529] '>
                         <span className = 'pl-3'>
                         We'll email you a magic code for a password-free sign in. Or you can <br></br>
                         <a href='#' className='font-bold text-[#1264a3] no-underline'>sign in manually instead</a>.
                         </span>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     );

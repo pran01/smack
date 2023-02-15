@@ -33,8 +33,8 @@ const AuthFirebase:React.FunctionComponent<IAuthFirebase> = (props) => {
     
     return (
     <>
-    <div className='siginWithGoogle'>
-        <button onClick={() => signInWithGoogle()} disabled={authing}>Sign In With Google</button>
+    <div className='w-80 bg-[#fff] border-solid border-2 border-[#4285f4] text-[#4285f4] text-lg font-bold h-11 rounded flex items-center'>
+        <button className='w-full' onClick={() => signInWithGoogle()} disabled={authing}>Sign In With Google</button>
     </div>
     </>
   )
