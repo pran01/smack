@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { useNavigate } from "react-router-dom";
-
-import "../styles/AuthFirebase.css";
 import PropTypes from "prop-types";
 
+import { onAuthStateChanged} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase/firebase";
 
@@ -30,6 +29,25 @@ const AuthFirebase: React.FunctionComponent<IAuthFirebase> = (props) => {
         setAuthing(false);
       });
   };
+
+  console.log(auth);
+
+  const [users, setUsers] = useState<any>([]);
+
+  useEffect(() => {
+    // Fetch the list of Google-authenticated users
+    onAuthStateChanged(getAuth() ,(user) => {
+      if (user && user.providerData) {
+        const googleUsers = user.providerData.filter((userInfo) => {
+          return userInfo.providerId === 'google.com';
+        });
+
+        setUsers(googleUsers);
+      }
+    });
+  }, []);
+
+  console.log(users);
 
   return (
     <React.Fragment>

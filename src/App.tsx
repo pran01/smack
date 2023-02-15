@@ -12,8 +12,9 @@ import TempMessage from "./components/TempMessage";
 function App() {
   return (
     <div className="App w-screen h-screen flex justify-center items-center">
-      {/* <UserList/>}
-      <ChatPage/> */}
+      {/* <AuthFirebase/> */}
+      <List/>
+      <ChatPage/>
       {/* <SignIn /> */}
       {/* <TempMessage /> */}
     </div>

@@ -7,7 +7,7 @@ module.exports = {
         "bg-dark": "#19171d",
         "bg-light": "#1a1d21",
         "fg-gray": "#222529",
-        borderclr: "#565856",
+        "borderclr": "#565856",
       },
     },
   },
