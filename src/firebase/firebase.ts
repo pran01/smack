@@ -1,7 +1,3 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore"
-
 export const firebaseConfig = {
     apiKey: "AIzaSyD1_OG-TpTr5VX8WJ-3oqcP1hXgO00mq4M",
     authDomain: "smack-1ce15.firebaseapp.com",
