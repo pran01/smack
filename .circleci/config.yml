@@ -1,38 +1,45 @@
-version: 2.1
-
-orbs:
-  heroku: circleci/heroku@1.2.6
-
+version: 2
 jobs:
   build:
     docker:
-      - image: cimg/node:16.16.0
-
+      - image: circleci/node:14.17-browsers
     steps:
       - checkout
-      - run: npm install --production
-      - run: CI=false npm run build
-
-  test:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+  deploy:
     docker:
-      - image: cimg/node:16.16.0
+      - image: circleci/aws-cli
     steps:
-      - checkout
-      - run: npm install --production
-      - run: npm run test
-
-  deploy_to_dev_env:
-    executor: heroku/default
-    steps:
-      - checkout
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_DEV_ENV_APP_NAME
-
-
+      - attach_workspace:
+          at: .
+      - run: |
+          aws configure set aws_access_key_id AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key AWS_SECRET_ACCESS_KEY
+          aws s3 sync ./build s3://BUCKET_NAME --delete
 workflows:
-  smack-left:
+  version: 2
+  build-and-deploy:
     jobs:
-      - build
-      - deploy_to_dev_env:
+      - build:
+          filters:
+            branches:
+              only: main
+      - deploy:
           requires:
             - build
+          filters:
+            branches:
+              only: main
