@@ -8,15 +8,19 @@ import ChatPage from "./components/ChatPage";
 
 import AuthFirebase from "./components/AuthFirebase";
 import TempMessage from "./components/TempMessage";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <div className="App w-screen h-screen flex justify-center items-center">
-      {/* <UserList/>
+    <QueryClientProvider client={queryClient}>
+      <div className="App w-screen h-screen flex justify-center items-end">
+        {/* <UserList/>
       <ChatPage/> */}
-      {/* <SignIn /> */}
-      <TempMessage />
-    </div>
+        {/* <SignIn /> */}
+        <TempMessage />
+      </div>
+    </QueryClientProvider>
   );
 }
 
