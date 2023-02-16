@@ -33,7 +33,7 @@ const ChatPage: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="w-screen flex flex-col gap-2 bg-bg-light">
+    <div className="w-full flex flex-col gap-2 bg-bg-light">
       <div className="m-3 p-3">
         <div className="h-10 flex gap-3 items-center">
           <img
@@ -62,8 +62,8 @@ const ChatPage: React.FunctionComponent = () => {
         })}
       </div>
 
-      <div className="flex bg-bg-dark p-3 gap-3 items-center m-3">
-        <div className="flex-1 input-fields">
+      <div className="flex flex-col bg-bg-dark p-3 items-center">
+        <div className="w-full input-fields">
           {/* <input className="w-full outline-none bg-bg-light text-xl border p-2 text-white border-white" type="text" ref={messageData} /> */}
           <JoditEditor
             value={content}
