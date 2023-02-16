@@ -4,20 +4,26 @@ import { getDocs, collection } from "firebase/firestore";
 
 import { db } from "../firebase/firebase";
 
-const List: React.FunctionComponent = () => {
+
+type Props = {
+  addReceiver: React.Dispatch<React.SetStateAction<any>>;
+};
+
+const List: React.FunctionComponent<Props> = ({addReceiver}) => {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fun1 = async () => {
-      const querySnapshot = await getDocs(collection(db, "user_db"));
+      const querySnapshot = await getDocs(collection(db, "users"));
+      const users:any = [];
       querySnapshot.forEach((doc: any) => {
-        setUserData(JSON.parse(JSON.stringify(doc.data())).users);
+        users.push(JSON.parse(JSON.stringify(doc.data())));
       });
+      setUserData(users);
     };
     fun1();
   }, []);
 
-  // console.log(userData);
   const deleteUser = (user_id: number) => {
     setUserData((userData) => userData.filter((data, _id) => user_id !== _id));
   };
@@ -38,12 +44,12 @@ const List: React.FunctionComponent = () => {
             return (
               <div
                 key={_id}
+                onClick={() => addReceiver(data)}
                 className="flex items-center justify-between hover:bg-slate-500 p-3">
                 <div className="flex gap-4 items-center">
                   <img
                     className="w-6 rounded-md"
-                    src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg"
-                    alt=""
+                    src={data.photoUrl}
                   />
                   <p className="text-slate-50 font-semibold text-xs">
                     {data.name}

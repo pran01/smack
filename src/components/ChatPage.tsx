@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
+import { type } from "os";
 // import "../styles/ChatPage.css";
 
 type chatMessage = {
@@ -10,10 +11,29 @@ type chatMessage = {
   message: string;
 };
 
-const ChatPage: React.FunctionComponent = () => {
+
+type Props = {
+  receiver:any
+}
+
+
+const ChatPage: React.FunctionComponent<Props> = ({receiver}) => {
+  console.log(receiver);
   const [content, setContent] = useState("");
   const messageData = useRef<HTMLInputElement>(null);
   const [chatData, setChatData] = useState<chatMessage[]>([]);
+
+  // useEffect(() => {
+  //   const fun1 = async () => {
+  //     const querySnapshot = await getDocs(collection(db, "users"));
+  //     const users:any = [];
+  //     querySnapshot.forEach((doc: any) => {
+  //       users.push(JSON.parse(JSON.stringify(doc.data())));
+  //     });
+  //     setUserData(users);
+  //   };
+  //   fun1();
+  // }, []);
 
   const addMessage = () => {
     if (messageData) {
@@ -38,10 +58,10 @@ const ChatPage: React.FunctionComponent = () => {
         <div className="h-10 flex gap-3 items-center">
           <img
             className="h-full"
-            src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg"
+            src={receiver.photoUrl}
             alt=""
           />
-          <h3 className="text-xl font-semibold text-white">Pranav Sinha</h3>
+          <h3 className="text-xl font-semibold text-white">{receiver.name}</h3>
         </div>
       </div>
       <hr className="text-white" />
@@ -49,7 +69,7 @@ const ChatPage: React.FunctionComponent = () => {
         {chatData.map((chat, _id) => {
           return (
             <div className="" key={_id}>
-              {/* <img className='' src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg" alt=""/> */}
+              <img className='' src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg" alt=""/>
               <div className="">
                 <div className="">{chat.sender}</div>
                 <p
