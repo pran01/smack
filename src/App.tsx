@@ -9,6 +9,7 @@ import ChatPage from "./components/ChatPage";
 import AuthFirebase from "./components/AuthFirebase";
 import TempMessage from "./components/TempMessage";
 import { QueryClient, QueryClientProvider } from "react-query";
+import TextBox from "./components/TextBox";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,7 +19,8 @@ function App() {
         {/* <UserList/>
       <ChatPage/> */}
         {/* <SignIn /> */}
-        <TempMessage />
+        {/* <TempMessage />  */}
+        <TextBox />
       </div>
     </QueryClientProvider>
   );
