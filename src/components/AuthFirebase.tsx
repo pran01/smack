@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
-import { useNavigate } from "react-router-dom";
-
-import "../styles/AuthFirebase.css";
-import PropTypes from "prop-types";
-
+import { onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase/firebase";
 
@@ -31,9 +26,28 @@ const AuthFirebase: React.FunctionComponent<IAuthFirebase> = (props) => {
       });
   };
 
+  console.log(auth);
+
+  const [users, setUsers] = useState<any>([]);
+
+  useEffect(() => {
+    // Fetch the list of Google-authenticated users
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user && user.providerData) {
+        const googleUsers = user.providerData.filter((userInfo) => {
+          return userInfo.providerId === "google.com";
+        });
+
+        setUsers(googleUsers);
+      }
+    });
+  }, []);
+
+  console.log(users);
+
   return (
     <React.Fragment>
-      <div className="w-80 bg-transparent border-solid border-2 border-[#4285f4] text-[#4285f4] text-lg font-bold h-11 rounded flex items-center">
+      <div className="w-96 bg-transparent border-solid border-2 border-[#4285f4] text-[#4285f4] text-lg font-bold h-11 rounded flex items-center">
         <button
           className="w-full"
           onClick={() => signInWithGoogle()}
