@@ -3,6 +3,7 @@ import SignIn from "./components/SignIn";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Client from "./components/Client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import TextBox from "./components/TextBox";
 
 function App() {
   const queryClient = new QueryClient();
@@ -17,6 +18,9 @@ function App() {
         </Router>
       </div>
     </QueryClientProvider>
+    // <div>
+    //   <TextBox />
+    // </div>
   );
 }
 

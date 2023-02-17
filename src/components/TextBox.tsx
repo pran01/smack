@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect , useRef } from 'react';
 import UserMention from './UserMention';
 import { debounce } from 'lodash';
 
@@ -50,35 +50,46 @@ const userData: User[] = [
 
 function TextBox() {
     const [inputValue, setInputValue] = useState('');
-    const [filteredData, setFilteredData] = useState<User[]>([]);    
+    const [filteredData, setFilteredData] = useState<User[]>([]);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      if(inputRef.current){
+        inputRef.current.focus();
+      }
+    },[filteredData]);
   
     // Wrap handleInputChange function with debounce
     const delayedFilter = debounce((value: string) => {  
 
     // Filter the data based on the user input
-    if (value.startsWith('@')) {
-      const filtered = userData.filter((user) =>
-        user.name
-          .split(' ')
-          .some((namePart) =>
-            namePart.toLowerCase().startsWith(value.substring(1).toLowerCase())
-          )
-      );
-      setFilteredData(filtered);
-    } else {
-      setFilteredData([]);
-    }
-  }, 1000); // Wait for 1 second before invoking the function
+    const atSignIndex = value.lastIndexOf('@');
+  if (atSignIndex >= 0) {
+    const inputAfterAtSign = value.substring(atSignIndex + 1);
+    const filtered = userData.filter((user) =>
+      user.name
+        .split(' ')
+        .some((namePart) =>
+          namePart.toLowerCase().startsWith(inputAfterAtSign.toLowerCase())
+        )
+    );
+    setFilteredData(filtered);
+  } else {
+    setFilteredData([]);
+  }
+}, 1000); // Wait for 1 second before invoking the function
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
     delayedFilter(value);
   };
-    const handleNameClick = (name: string) => {
-      setInputValue(`@${name}`);
-      setFilteredData([]);
-    };
+  const handleNameClick = (name: string) => {
+    const atSignIndex = inputValue.lastIndexOf('@');
+    const message = inputValue.substring(0, atSignIndex);
+    setInputValue(`${message}@${name} `);
+    setFilteredData([]);
+  };
   
     return (
       <div className='w-full relative'>
@@ -100,7 +111,8 @@ function TextBox() {
           className='h-28 w-3/5 border-solid border-2 border-[#565856] bg-[#222529] text-[#D1D2D3] rounded-lg mt-11 mx-11' 
           placeholder='mention' 
           value={inputValue} 
-          onChange={handleInputChange}
+          onChange={handleInputChange}  
+          ref = {inputRef}
         />
       </div>
     );
