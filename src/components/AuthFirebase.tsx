@@ -1,23 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+
+import { useNavigate } from "react-router-dom";
+// import PropTypes from "prop-types";
+
+import { onAuthStateChanged} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase/firebase";
+
+import { db } from "../firebase/firebase";
 
 initializeApp(firebaseConfig);
 
 export interface IAuthFirebase {}
 
-const AuthFirebase: React.FunctionComponent<IAuthFirebase> = (props) => {
+const AuthFirebase: React.FunctionComponent<IAuthFirebase> = () => {
+  const navigate = useNavigate();
   const auth = getAuth();
   const [authing, setAuthing] = useState(false);
+  const [userData, setUserData] = useState();
 
   const signInWithGoogle = async () => {
     setAuthing(true);
 
     signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
-        console.log(response.user);
+      .then(async (response) => {
+        const userData = {
+          name: response.user.displayName,
+          photoUrl: response.user.photoURL,
+          email: response.user.email,
+          status: true,
+          uid: response.user.uid
+        }
+
+        const q = query(collection(db, "users"), where("uid", "==", userData.uid));
+        const querySnapshot = await getDocs(q);
+        
+        if(!querySnapshot.docs.length){
+          const dbRef = collection(db, "users");
+          await addDoc(dbRef, userData)
+          .then(docRef => {
+              console.log("Document has been added successfully");
+              navigate("/client");
+          })
+          .catch(error => {
+              console.log(error);
+          })
+        }else{
+          console.log("User Already Present");
+          navigate("/client");
+        }
+        
+        localStorage.setItem("current_user",JSON.stringify(userData));
         setAuthing(false);
       })
       .catch((err) => {
@@ -26,12 +61,8 @@ const AuthFirebase: React.FunctionComponent<IAuthFirebase> = (props) => {
       });
   };
 
-  console.log(auth);
-
   const [users, setUsers] = useState<any>([]);
-
   useEffect(() => {
-    // Fetch the list of Google-authenticated users
     onAuthStateChanged(getAuth(), (user) => {
       if (user && user.providerData) {
         const googleUsers = user.providerData.filter((userInfo) => {
