@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { type } from "os";
 
-import { getDocs, collection, addDoc } from "firebase/firestore";
+import { getDocs, collection, addDoc, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import Message from "./Message";
 
@@ -27,16 +27,23 @@ const ChatPage: React.FunctionComponent<Props> = ({receiver, sender}) => {
   const [chatData, setChatData] = useState<chatMessage[]>([]);
   const [filteredData, setFilteredData] = useState<chatMessage[]>([]);
 
-  useEffect(() => {
-    const getMessage = async () => {
-      const querySnapshot = await getDocs(collection(db, "dm"));
-      const messages:any = [];
-      querySnapshot.forEach((doc: any) => {
-        messages.push(JSON.parse(JSON.stringify(doc.data())));
+  useEffect(():any => {
+      const q = query(
+        collection(db, "dm"),
+        orderBy("timestamp"),
+      );
+
+      const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+        let messages:any = [];
+        QuerySnapshot.forEach((doc: any) => {
+          messages.push(JSON.parse(JSON.stringify(doc.data())));
+        });
+
+        console.log(messages);
+        setChatData(messages);
       });
-      setChatData(messages);
-    };
-    getMessage();
+      
+      return unsubscribe;
   }, []);
 
   const addMessage = async () => {
@@ -73,7 +80,7 @@ const ChatPage: React.FunctionComponent<Props> = ({receiver, sender}) => {
     console.log("called");
     const chats = chatData.filter((chat) => {
       console.log(chat.receiver.uid, receiver.uid);
-      return (chat.sender.uid == sender.uid) && (chat.receiver.uid == receiver.uid);
+      return (((chat.sender.uid == sender.uid) && (chat.receiver.uid == receiver.uid)) || ((chat.sender.uid == receiver.uid) && (chat.receiver.uid == sender.uid)) ) ;
     })
     setFilteredData(chats);
   }
@@ -99,7 +106,7 @@ const ChatPage: React.FunctionComponent<Props> = ({receiver, sender}) => {
         })}
       </div>
 
-      <div className="flex bg-bg-dark p-3 items-center">
+      <div className="flex absol bg-bg-dark p-3 items-center">
         <div className="w-full input-fields bg-black">
           {/* <input className="w-full outline-none bg-bg-light text-xl border p-2 text-white border-white" type="text" ref={messageData} /> */}
           <JoditEditor

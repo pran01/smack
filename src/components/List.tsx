@@ -37,11 +37,11 @@ const List: React.FunctionComponent<Props> = ({currentUser, addReceiver}) => {
 
   return (
     <div className="w-full flex flex-col bg-bg-dark">
-      <div className="flex items-center p-3 text-slate-50">
+      <div className="flex items-center py-3 px-4 text-slate-50">
         <i
-          className="fa-solid fa-caret-down p-1 px-2 mr-2 hover:bg-slate-400 rounded-lg"
+          className="fa-solid fa-caret-down py-1 px-4 mr-4 hover:bg-slate-400 rounded-lg text-xl"
           onClick={() => setCollapse(!collapse)}></i>
-        <h1 className="text-lg font-semibold">Direct Messages</h1>
+        <h1 className="text-xl font-semibold">Direct Messages</h1>
       </div>
       {collapse && (
         <div className="flex flex-col gap-2">
