@@ -1,13 +1,13 @@
 import UserImageStatus from "./UserImageStatus";
 
 type TopBarProps = {
-  user: { name: string; image: string; status: string };
+  user: any;
   workspace: string;
 };
 
 const TopBar = ({ user, workspace }: TopBarProps) => {
   return (
-    <header className="relative w-full h-12 bg-bg-dark flex justify-center items-center border-b border-borderclr">
+    <header className="relative w-full h-14 bg-bg-dark flex justify-between items-center border-b border-borderclr px-5">
       <div className="relative w-2/5 h-8 flex justify-center items-center">
         <input
           type="text"
@@ -18,7 +18,9 @@ const TopBar = ({ user, workspace }: TopBarProps) => {
         />
         <i className="absolute fa-solid fa-search text-borderclr right-2"></i>
       </div>
-      <UserImageStatus user={user} />
+      <div className="relative">
+        <UserImageStatus user={user} />
+      </div>
     </header>
   );
 };

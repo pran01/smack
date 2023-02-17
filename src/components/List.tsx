@@ -3,13 +3,15 @@ import { getDocs, collection } from "firebase/firestore";
 // import "../styles/UserList.css";
 
 import { db } from "../firebase/firebase";
+import UserImageStatus from "./UserImageStatus";
 
 
 type Props = {
+  currentUser: any,
   addReceiver: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const List: React.FunctionComponent<Props> = ({addReceiver}) => {
+const List: React.FunctionComponent<Props> = ({currentUser, addReceiver}) => {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -17,7 +19,10 @@ const List: React.FunctionComponent<Props> = ({addReceiver}) => {
       const querySnapshot = await getDocs(collection(db, "users"));
       const users:any = [];
       querySnapshot.forEach((doc: any) => {
-        users.push(JSON.parse(JSON.stringify(doc.data())));
+        const user = JSON.parse(JSON.stringify(doc.data()));
+        if(!(user.uid === currentUser.uid)){
+          users.push(user);
+        }
       });
       setUserData(users);
     };
@@ -36,7 +41,7 @@ const List: React.FunctionComponent<Props> = ({addReceiver}) => {
         <i
           className="fa-solid fa-caret-down p-1 px-2 mr-2 hover:bg-slate-400 rounded-lg"
           onClick={() => setCollapse(!collapse)}></i>
-        <h1 className="text-xs font-semibold">Direct Messages</h1>
+        <h1 className="text-lg font-semibold">Direct Messages</h1>
       </div>
       {collapse && (
         <div className="flex flex-col gap-2">
@@ -45,20 +50,17 @@ const List: React.FunctionComponent<Props> = ({addReceiver}) => {
               <div
                 key={_id}
                 onClick={() => addReceiver(data)}
-                className="flex items-center justify-between hover:bg-slate-500 p-3">
+                className="flex items-center justify-between hover:bg-slate-600 px-5 cursor-arrow h-14">
                 <div className="flex gap-4 items-center">
-                  <img
-                    className="w-6 rounded-md"
-                    src={data.photoUrl}
-                  />
-                  <p className="text-slate-50 font-semibold text-xs">
+                  <UserImageStatus user={data}/>
+                  <p className="text-slate-50 font-semibold text-lg">
                     {data.name}
                   </p>
                 </div>
 
                 <div className="cross-mark">
                   <i
-                    className="fa-solid fa-xmark"
+                    className="fa-solid fa-xmark cursor-pointer"
                     onClick={() => deleteUser(_id)}></i>
                 </div>
               </div>

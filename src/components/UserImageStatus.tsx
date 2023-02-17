@@ -1,15 +1,15 @@
 type UserImageStatusProps = {
   user: { name: string; image: string; status: string };
 };
-const UserImageStatus = ({ user }: UserImageStatusProps) => {
+
+const UserImageStatus = ({ user }: any) => {
   return (
-    <div className="absolute h-3/5 right-10">
-      <img src={user.image} alt="user" className="max-w-full max-h-full" />
-      {user.status === "active" && (
-        <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500 rounded-full"></div>
-      )}
-      {user.status === "inactive" && (
-        <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
+    <div className="relative">
+      <img src={user.photoUrl} alt="user" className="h-10 rounded-md" />
+      {user.status ? (
+        <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full"></div>
+      ):(
+        <div className="absolute bottom-0 right-0 w-3 h-3 bg-transparent border-2 border-gray-400 rounded-full"></div>
       )}
     </div>
   );
