@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import JoditEditor from "jodit-react";
-import { type } from "os";
+import TempMessage from "./TempMessage";
+import EmojiSearch from "./EmojiSearch";
 // import "../styles/ChatPage.css";
 
 type chatMessage = {
@@ -11,17 +12,16 @@ type chatMessage = {
   message: string;
 };
 
-
 type Props = {
-  receiver:any
-}
+  receiver: any;
+};
 
-
-const ChatPage: React.FunctionComponent<Props> = ({receiver}) => {
+const ChatPage: React.FunctionComponent<Props> = ({ receiver }) => {
   console.log(receiver);
   const [content, setContent] = useState("");
   const messageData = useRef<HTMLInputElement>(null);
   const [chatData, setChatData] = useState<chatMessage[]>([]);
+  const [emojiSearchVisible, setEmojiSearchVisible] = useState(false);
 
   // useEffect(() => {
   //   const fun1 = async () => {
@@ -52,15 +52,15 @@ const ChatPage: React.FunctionComponent<Props> = ({receiver}) => {
     }
   };
 
+  function addReaction(character: string) {
+    console.log(character);
+  }
+
   return (
     <div className="w-full flex flex-col gap-2 bg-bg-light">
       <div className="m-3 p-3">
         <div className="h-10 flex gap-3 items-center">
-          <img
-            className="h-full"
-            src={receiver.photoUrl}
-            alt=""
-          />
+          <img className="h-full" src={receiver.photoUrl} alt="" />
           <h3 className="text-xl font-semibold text-white">{receiver.name}</h3>
         </div>
       </div>
@@ -69,7 +69,11 @@ const ChatPage: React.FunctionComponent<Props> = ({receiver}) => {
         {chatData.map((chat, _id) => {
           return (
             <div className="" key={_id}>
-              <img className='' src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg" alt=""/>
+              <img
+                className=""
+                src="https://shayarimaza.com/files/boys-dp-images/sad-boy-dp-images/Sad-boy-Profile-Pic.jpg"
+                alt=""
+              />
               <div className="">
                 <div className="">{chat.sender}</div>
                 <p
@@ -82,7 +86,17 @@ const ChatPage: React.FunctionComponent<Props> = ({receiver}) => {
         })}
       </div>
 
-      <div className="flex flex-col bg-bg-dark p-3 items-center">
+      <TempMessage
+        emojiSearchVisible={emojiSearchVisible}
+        setEmojiSearchVisible={setEmojiSearchVisible}
+      />
+      <div className="flex flex-col bg-bg-light p-3 items-center">
+        {emojiSearchVisible && (
+          <EmojiSearch
+            onClick={addReaction}
+            setEmojiSearchVisible={setEmojiSearchVisible}
+          />
+        )}
         <div className="w-full input-fields">
           {/* <input className="w-full outline-none bg-bg-light text-xl border p-2 text-white border-white" type="text" ref={messageData} /> */}
           <JoditEditor
