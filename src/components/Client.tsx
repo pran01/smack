@@ -16,7 +16,7 @@ const Client = () => {
 
   useEffect(() => {
     setSender(JSON.parse(localStorage.getItem("current_user")!));
-  },[])
+  }, []);
 
   return (
     <section className="w-full h-full flex flex-col">
@@ -25,7 +25,7 @@ const Client = () => {
         <aside className="w-80 bg-bg-dark flex flex-col border-r border-borderclr">
           <List currentUser={sender} addReceiver={setReceiver} />
         </aside>
-        <section className="h-full w-full bg-bg-light">
+        <section className="h-full w-full bg-bg-light flex">
           <ChatPage receiver={receiver} sender={sender} />
         </section>
       </div>
