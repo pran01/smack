@@ -7,7 +7,7 @@ type TopBarProps = {
 
 const TopBar = ({ user, workspace }: TopBarProps) => {
   return (
-    <header className="relative w-full h-14 bg-bg-dark flex justify-between items-center border-b border-borderclr px-5">
+    <header className="relative w-full h-14 bg-bg-dark flex justify-between items-center border-b border-borderclr px-5 py-7">
       <div className="relative w-2/5 h-8 flex justify-center items-center">
         <input
           type="text"

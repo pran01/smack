@@ -164,14 +164,13 @@ const ChatPage: React.FunctionComponent<Props> = ({ receiver, sender }) => {
 
       
 
-      {/* <div className="w-full input-fields"> */}
       <div className="relative flex items-center p-8">
         <div className="w-full input-fields bg-black">
           <JoditEditor
             value={content}
-            className="bg-bg-dark"
             config={{
               // all options from https://xdsoft.net/jodit/doc/
+              theme:"dark",
               readonly: false,
               width: "100%",
               height: "100px",
@@ -203,8 +202,8 @@ const ChatPage: React.FunctionComponent<Props> = ({ receiver, sender }) => {
             onChange={(e:any)=>setContent(e.target?.value)}
           />
         </div>
-        <div className="text-lg absolute bottom-5 right-6" onClick={() => addMessage()}>
-          <i className="text-2xl text-white fa-regular fa-paper-plane p-6"></i>
+        <div className="text-lg absolute z-10 bg-bg-dark bottom-10 right-10 rounded-xl" onClick={() => addMessage()}>
+          <i className="text-2xl text-white fa-regular fa-paper-plane px-4 p-3"></i>
         </div>
       </div>
     </div>
